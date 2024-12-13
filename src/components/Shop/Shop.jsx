@@ -3,17 +3,20 @@ import { PriceCarousel } from './PriceCarousel';
 import { useEffect, useState } from "react";
 import { Typography } from "@material-tailwind/react";
 import { CheckCircleIcon, MinusCircleIcon } from "@heroicons/react/24/solid";
+import axios from 'axios';
 
 const cards = [
   {
     title: "standard",
+    symbol : "₹",
     desc: "",
-    price: ["₹", "100"],
-    options: [{ icon: <MinusCircleIcon className="h-5 w-5 text-blue-gray-900" />, info: "100 ₹ in wallet" }],
+    price: 100,
+    options: [{ icon: <MinusCircleIcon className="h-5 w-5 text-blue-gray-900" />, info: `` }],
   },
   {
     title: "premium",
     desc: "",
+    symbol : "₹",
     price: ["$", "299", "year"],
     options: [
       { icon: <MinusCircleIcon className="h-5 w-5 text-blue-gray-900" />, info: "Complete documentation" },
@@ -33,8 +36,10 @@ const cards = [
 ];
 
 
-export function PricingSection11() {
+export function PricingSection11({getPacksUrl, buyPackUrl}) {
   const [mobileDisplay, setMobileDisplay] = useState(false)
+  const [coinPacks, setCoinPacks] = useState([])
+
   useEffect(()=>{
     const mobile = function () {
       let check = false;
@@ -45,18 +50,69 @@ export function PricingSection11() {
     window.addEventListener('resize', ()=>{
       setMobileDisplay(mobile)
   })
+
+  }, [getPacksUrl])
+
+  useEffect(()=>{
+    const fetcher = async ()=>{
+      const packs = (await axios.get(getPacksUrl)).data.packs
+      const cards = []
+      if(packs)
+      {
+        for(let i=0;i<packs.length;i++)
+        {
+            // On Buy function
+            const onBuy = async (e) => {
+              e.preventDefault();
+            
+              try {
+                const response = await axios.post(buyPackUrl, {
+                  packId : packs[i]._id
+                }, {withCredentials : true});
+              
+                console.log("Buy pack result: ", response.data);
+              
+              } catch (error) {
+                console.error("Pack buy failed", error.response?.data || error.message);
+                alert("Cannot buy that pack!");
+              } 
+          };
+
+          // Card properties
+          const card = {
+            title: "standard",
+            buyFn : onBuy,
+            symbol : "₹",
+            desc: "",
+            price: packs[i].price,
+            options: [{ 
+              icon: <MinusCircleIcon className="h-5 w-5 text-blue-gray-900" />, 
+              info: `${packs[i].coins} coins in wallet.` 
+            }],
+          }
+          cards.push(card)
+        }
+        setCoinPacks(cards)
+      }
+    }
+  
+    fetcher()
   }, [])
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Navigation handlers
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? cards.length - 1 : prevIndex - 1));
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? coinPacks.length - 1 : prevIndex - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === cards.length - 1 ? 0 : prevIndex + 1));
+    setCurrentIndex((prevIndex) => (prevIndex === coinPacks.length - 1 ? 0 : prevIndex + 1));
   };
+
+  useEffect(()=>{
+    
+  }, [])
 
   return (
     <section className="overflow-hidden p-4 h-full items-center flex">
@@ -71,13 +127,11 @@ export function PricingSection11() {
           Compare each and every plan below to find the ideal
           match for your budget and events.
         </Typography>
-          {mobileDisplay ? <PriceCarousel currentIndex={currentIndex} cards={cards} handlePrev={handlePrev} handleNext={handleNext} /> :<PriceCardsWideDisplay cards={cards} />}
+          {mobileDisplay ? <PriceCarousel currentIndex={currentIndex} cards={coinPacks} handlePrev={handlePrev} handleNext={handleNext} /> :<PriceCardsWideDisplay cards={coinPacks} />}
         <Typography
           variant="small"
           className="mt-10 font-normal !text-gray-500"
         >
-          You have Free Unlimited Updates and Premium Support on each package.
-          You also have 30 days to request a refund.
         </Typography>
       </div>
     </section>

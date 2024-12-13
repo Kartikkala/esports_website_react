@@ -1,15 +1,18 @@
+/* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import SlidingSwitch from './SlidingSwitch';
+import axios from 'axios';
 
 // Icons
 import { LuUser } from "react-icons/lu";
 import { MdVpnKey } from "react-icons/md";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
+import {useNavigate} from 'react-router-dom';
 // Icons
 
 
-const LoginPage = () => {
+const LoginPage = ({loginUrl, registerUrl}) => {
     const [isVisible, setIsVisible] = useState(true);
   
     return (
@@ -19,7 +22,7 @@ const LoginPage = () => {
                 <div className="flex flex-col justify-center space-y-8 max-w-xs self-center">
                     <h2 className="self-center font-Protest text-4xl">{isVisible ? "LOGIN" : "REGISTER"}</h2>
                     <SlidingSwitch isVisible={isVisible} setIsVisible={setIsVisible}/>
-                    {isVisible ? <LoginForm/>: <RegisterForm/>}
+                    {isVisible ? <LoginForm loginUrl={loginUrl}/>: <RegisterForm/>}
                 </div>
             </div>
         </div>
@@ -27,11 +30,36 @@ const LoginPage = () => {
 };
 
 
-function LoginForm()
+function LoginForm({loginUrl})
 {
+  
   const [emailInput, changeEmailInputValue] = useState(0)
   const [passwordInput, changePasswordInputValue] = useState(0)
   const [buttonStatus, changeButtonStatus] = useState(false)
+
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(loginUrl, {
+        email : emailInput,
+        password : passwordInput
+      }, {withCredentials : true});
+
+      console.log("Login successful:", response.data);
+      if(response.data.success)
+      {
+        navigate("/")
+      }
+
+    } catch (error) {
+      console.error("Login failed:", error.response?.data || error.message);
+      alert("Login failed. Please check your credentials.");
+    } 
+    changeButtonStatus(true)
+  };
   return (
     <form className="space-y-6 flex flex-col">
       <div className="relative w-full h-full flex">
@@ -44,7 +72,7 @@ function LoginForm()
       <input onChange={(e) => changePasswordInputValue(e.target.value)} type="password" name="password" id="password" className="relative hover:bg-purple-100/50 hover:p-4 p-4 focus:z-30 focus:outline-none focus:bg-purple-100/75 focus:p-5 outline-none shadow-lg w-full sm:text-sm rounded-xl bg-purple-100 duration-200"/>
       </div>
 
-      <button onClick={() => {changeButtonStatus(true)}} className={`rounded-md p-3 transition-all shadow-lg ${buttonStatus ? "bg-gradient-to-br from-purple-600 to-purple-300": "bg-gradient-to-tr from-purple-600 to-priFront"}`}> Submit </button>
+      <button onClick={handleSubmit} className={`rounded-md p-3 transition-all shadow-lg ${buttonStatus ? "bg-gradient-to-br from-purple-600 to-purple-300": "bg-gradient-to-tr from-purple-600 to-priFront"}`}> Submit </button>
       <a href="" className="text-purple-600">Forgot Password?</a>
     </form>
   );

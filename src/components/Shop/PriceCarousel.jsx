@@ -19,7 +19,7 @@ export function PriceCarousel({
         width: `${cards.length * 100}%`
       }}>
             {cards.map((card, index) => <div key={index} className="w-full flex-shrink-0 p-2">
-                <PricingCard title={card.title} desc={card.desc} price={card.price} options={card.options} />
+                <PricingCard title={card.title} desc={card.desc} price={card.price} options={card.options} numberOfCards={cards.length} symbol={card.symbol} buyFn={card.buyFn}/>
               </div>)}
           </div>
         </div>

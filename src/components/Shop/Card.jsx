@@ -5,9 +5,11 @@ import {Button,
 
 import { useEffect, useState } from "react";
 
-export default function PricingCard({ title, desc, price, options }) {
+
+export default function PricingCard({ title, desc ,price, options, numberOfCards, symbol, buyFn }) {
   const [cardHeight, setCardHeight] = useState()
   const [cardHeaderheight, setCardHeaderHeight] = useState()
+
 
   useEffect(()=>{
     const card = document.getElementById("pricingcard")
@@ -15,12 +17,9 @@ export default function PricingCard({ title, desc, price, options }) {
     setCardHeight(card.offsetHeight)
     setCardHeaderHeight(cardheader.offsetHeight)
 
-    console.log("Card height: ", cardHeight)
-    console.log("Card header height: ", cardHeaderheight)
-
   },[cardHeaderheight, cardHeight])
     return (
-      <div id="pricingcard" className="flex flex-col w-[32.4%] md:w-2/3 bg-clip-border rounded-xl text-gray-700 shadow-md bg-cover bg-[url(/home/sirkartik/vscode/esports_website_react/frontend/src/assets/images/layered-waves-haikei.svg)]">
+      <div id="pricingcard" className={`flex flex-col w-[${100/numberOfCards}%] md:w-2/3 bg-clip-border rounded-xl text-gray-700 shadow-md bg-cover bg-[url(/home/sirkartik/vscode/esports_website_react/frontend/src/assets/images/layered-waves-haikei.svg)]`}>
         <div className={`backdrop-blur-sm w-full rounded-xl h-full`}>
           {/*---------------------------------------- Header Div --------------------------------------------- */}
           <div className="p-6 w-full" id="pricingcardheader"> 
@@ -42,8 +41,8 @@ export default function PricingCard({ title, desc, price, options }) {
               color="white"
               className="!mt-4 flex gap-1 !text-4xl"
             >
-              {price[0]}
-              {price[1]}
+              {symbol}
+              {price}
               <Typography
                 as="span"
                 color="white"
@@ -77,8 +76,8 @@ export default function PricingCard({ title, desc, price, options }) {
                 </div>
                 
               <div className="">
-                <Button fullWidth className="bg-gradient-to-br from-purple-500 to-purple">
-                  get started
+                <Button fullWidth className="bg-gradient-to-br from-purple-500 to-purple" onClick={buyFn}>
+                  Buy Now
                 </Button>
               </div>
 

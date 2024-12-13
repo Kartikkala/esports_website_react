@@ -9,6 +9,9 @@ import Admin from './Admin/Admin';
 import EventManager from './Admin/EventManager/EventManager';
 import GameManager from './Admin/GameManager/GameManager'
 
+const API_BASE_URL = "http://localhost/api"
+
+
 export const router = createBrowserRouter([
   {
       path : "/dashboard",
@@ -17,7 +20,7 @@ export const router = createBrowserRouter([
   },
   {
     path : "/login",
-    element : <Login/>,
+    element : <Login loginUrl={`${API_BASE_URL}/login`}/>,
     errorElement : <div>Error 404</div>
   },
   {
@@ -30,11 +33,11 @@ export const router = createBrowserRouter([
       },
       {
         path : "/shop",
-        element : <Pricing/>
+        element : <Pricing getPacksUrl={`${API_BASE_URL}/shop/getPacks`} buyPackUrl={`${API_BASE_URL}/shop/buyPack`}/>
       },
       {
         path : "/registeredEvents",
-        element : <EventsList category={"Registered Events"}/>
+        element : <EventsList category={"Registered Events"} url={`${API_BASE_URL}/events/events`}/>
       },
       {
         path : "/notifications",
