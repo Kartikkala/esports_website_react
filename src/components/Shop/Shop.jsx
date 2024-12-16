@@ -1,44 +1,16 @@
 import { PriceCardsWideDisplay } from './PriceCardsWideDisplay';
 import { PriceCarousel } from './PriceCarousel';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { WalletContext } from '../../contexts/CurrencyContext';
 import { Typography } from "@material-tailwind/react";
-import { CheckCircleIcon, MinusCircleIcon } from "@heroicons/react/24/solid";
+import {  MinusCircleIcon } from "@heroicons/react/24/solid";
 import axios from 'axios';
-
-const cards = [
-  {
-    title: "standard",
-    symbol : "₹",
-    desc: "",
-    price: 100,
-    options: [{ icon: <MinusCircleIcon className="h-5 w-5 text-blue-gray-900" />, info: `` }],
-  },
-  {
-    title: "premium",
-    desc: "",
-    symbol : "₹",
-    price: ["$", "299", "year"],
-    options: [
-      { icon: <MinusCircleIcon className="h-5 w-5 text-blue-gray-900" />, info: "Complete documentation" },
-      { icon: <CheckCircleIcon className="h-5 w-5 text-blue-gray-900" />, info: "Working materials in Sketch" },
-    ],
-  },
-  {
-    title: "company",
-    desc: "",
-    price: ["$", "399", "year"],
-    options: [
-      { icon: <CheckCircleIcon className="h-5 w-5 text-blue-gray-900" />, info: "Complete documentation" },
-      { icon: <CheckCircleIcon className="h-5 w-5 text-blue-gray-900" />, info: "Working materials in Sketch" },
-      { icon: <CheckCircleIcon className="h-5 w-5 text-blue-gray-900" />, info: "Integration help" },
-    ],
-  },
-];
 
 
 export function PricingSection11({getPacksUrl, buyPackUrl}) {
   const [mobileDisplay, setMobileDisplay] = useState(false)
   const [coinPacks, setCoinPacks] = useState([])
+  const {totalMoney, setTotalMoney} = useContext(WalletContext)
 
   useEffect(()=>{
     const mobile = function () {
@@ -69,8 +41,11 @@ export function PricingSection11({getPacksUrl, buyPackUrl}) {
                 const response = await axios.post(buyPackUrl, {
                   packId : packs[i]._id
                 }, {withCredentials : true});
-              
-                console.log("Buy pack result: ", response.data);
+
+                if(response.data.success)
+                {
+                  setTotalMoney((oldMoney)=>oldMoney+packs[i].coins)
+                }
               
               } catch (error) {
                 console.error("Pack buy failed", error.response?.data || error.message);

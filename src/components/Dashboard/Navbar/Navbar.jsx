@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { FaBell, FaCoins } from 'react-icons/fa';
 import { IoIosArrowBack } from "react-icons/io";
 import { NavLink, useLocation } from 'react-router-dom';
 import MenuCard from './MenuCard';
 import Avatar from '../Avatar';
+import axios from 'axios';
+import { UserContext } from '../../../contexts/UserContext';
+import { WalletContext } from '../../../contexts/CurrencyContext';
 
-const Navbar = () => {
+const Navbar = ({userCurrencyUrl, userInfoUrl}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const {totalMoney, setTotalMoney} = useContext(WalletContext)
+  const {user, setUser} = useContext(UserContext)
   const location = useLocation();
 
   // Define route-specific settings
@@ -31,6 +36,15 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  useEffect(()=>{
+    const getCurrencyAndUserInfo = async ()=>{
+      const response = await axios.get(userCurrencyUrl)
+      setTotalMoney(response.data.totalMoney)
+      setUser((await axios.get(userInfoUrl)).data)
+    }
+    getCurrencyAndUserInfo()
+  }, [])
+
   return (
     <>
       <nav className="sticky z-50 flex justify-between border-2 border-gray-800 bg-gradient-to-r from-gray-800/50 via-gray-900/50 to-black/50 backdrop-blur-sm shadow-lg text-white p-4 rounded-2xl max-w-[calc(100%-2px)] top-0.5 mx-auto md:sm:rounded-none md:sm:max-w-full w-full md:sm:top-0">
@@ -51,8 +65,11 @@ const Navbar = () => {
             <NavLink className='mr-3 self-center md:hidden' to="/notifications">
               <FaBell size={25} />
             </NavLink>
-            <NavLink className='mr-3 self-center md:hidden' to="/shop">
+            <NavLink className='mr-3 self-center md:hidden flex gap-2 items-end' to="/shop">
               <FaCoins size={25} />
+              <div className='text-[14px]'>
+              {totalMoney}
+              </div>
             </NavLink>
             <button onClick={toggleMenu} className="md:hidden">
               <Avatar />
@@ -75,7 +92,7 @@ const Navbar = () => {
       </nav>
 
       {/* Overlay of Menu Card */}
-      <MenuCard isOpen={isOpen} toggleMenu={toggleMenu} />
+      <MenuCard isOpen={isOpen} toggleMenu={toggleMenu} user={user}/>
     </>
   );
 };

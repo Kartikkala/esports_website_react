@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
   },
   {
     path : "/",
-    element : <Layout/>,
+    element : <Layout userCurrencyUrl={`${API_BASE_URL}/shop/getCurrency`} userInfoUrl={`${API_BASE_URL}/user`}/>,
     children : [
       {
         index : true,
@@ -49,7 +49,7 @@ export const router = createBrowserRouter([
       },
       {
         path : "/upcomingEvents",
-        element : <EventsList category={"upcoming"} getEventsUrl={`${API_BASE_URL}/events/events`} eventRegistrationUrl={`${API_BASE_URL}/events/registerForEvent`}/>,
+        element : <EventsList category={"upcoming"} getEventsUrl={`${API_BASE_URL}/events/events`} getUserUrl={`${API_BASE_URL}/user`} eventRegistrationUrl={`${API_BASE_URL}/events/registerForEvent`} eventDeletetionUrl={`${API_BASE_URL}/admin/deleteEvent`}/>,
       },
       {
         path : "/admin",
@@ -61,11 +61,11 @@ export const router = createBrowserRouter([
           },
           {
             path : "eventManager",
-            element : <EventManager/>,
+            element : <EventManager getGamesUrl={`${API_BASE_URL}/admin/getGames`} eventSubmitUrl={`${API_BASE_URL}/admin/createEvent`}/>,
           },
           {
             path : "gameManager",
-            element : <GameManager/>
+            element : <GameManager getGamesUrl={`${API_BASE_URL}/admin/getGames`} gameSubmitUrl={`${API_BASE_URL}/admin/createGame`}/>
           }
         ]
       }

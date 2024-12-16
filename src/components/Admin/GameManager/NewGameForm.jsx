@@ -1,16 +1,50 @@
 import { useState } from "react"
 import { FaSquarePlus } from "react-icons/fa6";
+import axios from "axios";
 
 
-export default function NewGameForm()
+export default function NewGameForm({gameSubmitUrl})
 {
-    const [gameName, changeGameNameValue] = useState(0)
-    const [imageBanner, changeImageBanner] = useState("")
-    const [modeName, changeModeNameValue] = useState(0)
-    const [maxTeams, changeMaxTeamsValue] = useState(0)
-    const [maxTeamMembers, changeMaxTeamMembersValue] = useState(0)
+    const [gameName, changeGameNameValue] = useState(undefined)
+    const [imageBanner, changeImageBanner] = useState()
+    const [modeName, changeModeNameValue] = useState(undefined)
+    const [maxTeams, changeMaxTeamsValue] = useState(undefined)
+    const [maxTeamMembers, changeMaxTeamMembersValue] = useState(undefined)
     const [buttonStatus, changeButtonStatus] = useState(false)
     
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        try {
+            const query = {
+                name : gameName,
+                maxTeamMembers,
+                maxTeams,
+                modeName,
+                type : true, // Change this
+                imageBanner
+              }
+          console.log("Query is: ", query)
+          const response = await axios.post(gameSubmitUrl, query , {withCredentials : true});
+          // Check response status code and send appropriate message
+    
+          
+          if(response.data.success)
+          {
+            alert("Success!")
+          }
+          else
+          {
+            alert("Faliure!")
+          }
+    
+        } catch (error) {
+          console.error("New game failiure", error.response?.data || error.message);
+          
+          alert("New game creation has some error!");
+        } 
+        changeButtonStatus(true)
+      };
 
     function handleImageUpload(event)
     {
@@ -69,7 +103,7 @@ export default function NewGameForm()
     <input onChange={(e) => changeMaxTeamMembersValue(e.target.value)} type="number" name="maxTeamMembers" id="maxTeamMembers" className="mx-auto relative  hover:bg-gray-900/70 hover:p-3 h-12 focus:z-[20] focus:outline-none focus:bg-gray-900/70 focus:p-3 outline-none shadow-lg sm:text-sm rounded-xl bg-gray-800/40 duration-200 text-gray-300 pl-3"/>
     </div>
 
-    <button onClick={() => {changeButtonStatus(true)}} className={`rounded-md p-3 transition-all shadow-lg ${buttonStatus ? "bg-gradient-to-br from-purple-600 to-purple-300": "bg-gradient-to-tr from-purple-600 to-priFront"}`}> Submit </button>
+    <button onClick={handleSubmit} className={`rounded-md p-3 transition-all shadow-lg ${buttonStatus ? "bg-gradient-to-br from-purple-600 to-purple-300": "bg-gradient-to-tr from-purple-600 to-priFront"}`}> Submit </button>
   </form>
     )
 }

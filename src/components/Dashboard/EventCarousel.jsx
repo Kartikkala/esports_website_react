@@ -23,6 +23,7 @@ export default function EventCarousel()
             })
         }
 
+
         window.addEventListener('resize', handleWindowChange)
     }, [])
     const showOnDesktop = windowSize.width < 650

@@ -21,6 +21,8 @@
     "@types/react-slick": "^0.23.13",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.9",
+    "buffer": "^6.0.3",
+    "fbemitter": "^3.0.0",
     "framer-motion": "^11.11.8",
     "js-cookie": "^3.0.5",
     "postcss": "^8.4.47",
