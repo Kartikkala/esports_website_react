@@ -7,8 +7,10 @@ import JoinIdDialog from './JoinIdDialog';
 import { useState } from 'react';
 
 // eslint-disable-next-line react/prop-types
-const EventCard = ({game, imageBanner, prizepool, mode, fee, date, totalPlayersRegistered, totalSlots, joinId, registerButtonTxt, registerButtonFn, deleteEventButtonFn, submitJoinIdUrl, eventId, admin, setChange, deleteStage, registerStage}) => {
+const EventCard = ({game, imageBanner, prizepool, mode, fee, date, totalPlayersRegistered, totalSlots, joinId, registerButtonTxt, registerButtonFn, deleteEventButtonFn, submitJoinIdUrl, eventId, admin, setChange}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [deleteStage, setDeleteStage] = useState(1)
+  const [registerStage, setRegisterStage] = useState(1)
   return (
       <div className="h-[20em] w-[14em] min-w-[14em] max-w-[15em] border-2 border-gray-800 rounded-[1.5em] bg-gradient-to-r from-gray-800/50 via-gray-900/50 to-black/50 backdrop-blur-lg shadow-lg text-white font-nunito p-[4px] flex flex-col justify-around items-left gap-[0.75em] grow">
         <div className='flex flex-col min-h-[99%] rounded-[1.5em]'>
@@ -31,7 +33,7 @@ const EventCard = ({game, imageBanner, prizepool, mode, fee, date, totalPlayersR
               </div>
               <div className='flex justify-between gap-2'>
                   {registerButtonTxt && registerButtonFn? 
-                  <button onClick={registerButtonFn} className=" px-[1em] py-[0.25em] border-[1px] rounded-full flex justify-center items-center gap-[0.5em] overflow-hidden group hover:translate-y-[0.125em] duration-200 backdrop-blur-[12px]">
+                  <button onClick={()=>{setRegisterStage(registerStage+1);registerButtonFn()}} className=" px-[1em] py-[0.25em] border-[1px] rounded-full flex justify-center items-center gap-[0.5em] overflow-hidden group hover:translate-y-[0.125em] duration-200 backdrop-blur-[12px]">
                   {registerStage===1 ? 
                   <p>{registerButtonTxt}</p>
                   :<p className='text-green-700'>{'Reg?'}</p>}
@@ -46,7 +48,7 @@ const EventCard = ({game, imageBanner, prizepool, mode, fee, date, totalPlayersR
                 </button>
                 : null }
                   {deleteEventButtonFn && admin? 
-                  <button onClick={deleteEventButtonFn} className="px-[0.8em] py-[0.25em] border-[1px] rounded-full flex justify-center items-center gap-[0.5em] overflow-hidden group hover:translate-y-[0.125em] duration-200 backdrop-blur-[12px]">
+                  <button onClick={()=>{deleteEventButtonFn();setDeleteStage((stage)=>stage = stage+1)}} className="px-[0.8em] py-[0.25em] border-[1px] rounded-full flex justify-center items-center gap-[0.5em] overflow-hidden group hover:translate-y-[0.125em] duration-200 backdrop-blur-[12px]">
                   {deleteStage===1 ? 
                   <MdDeleteOutline color='red'/>
                   :<IoIosCheckmarkCircle color='red'/>}

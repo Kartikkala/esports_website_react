@@ -27,7 +27,6 @@ export default function EventCarousel()
         window.addEventListener('resize', handleWindowChange)
     }, [])
     const showOnDesktop = windowSize.width < 650
-    console.log(showOnDesktop)
     return (
         <Slider arrows={false} className="relative z-0">
             {

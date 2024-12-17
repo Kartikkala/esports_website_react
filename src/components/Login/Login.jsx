@@ -47,8 +47,6 @@ function LoginForm({loginUrl})
         email : emailInput,
         password : passwordInput
       }, {withCredentials : true});
-
-      console.log("Login successful:", response.data);
       if(response.data.success)
       {
         navigate("/")

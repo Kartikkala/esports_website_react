@@ -24,7 +24,6 @@ export default function NewGameForm({gameSubmitUrl})
                 type : true, // Change this
                 imageBanner
               }
-          console.log("Query is: ", query)
           const response = await axios.post(gameSubmitUrl, query , {withCredentials : true});
           // Check response status code and send appropriate message
     

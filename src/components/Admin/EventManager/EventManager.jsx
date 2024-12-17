@@ -20,9 +20,9 @@ export default function EventManager({getGamesUrl, eventSubmitUrl})
   }, [])
   return (
     <div className="flex flex-col gap-5 overflow-y-auto h-full">
-      <GameList gamesArray={gameList} setGameIdState={setSelectedGameId}/>
-      <div className="mx-auto py-5 w-10/12 rounded-xl flex flex-col justify-around bg-gray-800/10 backdrop-blur-sm">
-          <div className="flex flex-col justify-center space-y-8 max-w-xs self-center">
+      <GameList gamesArray={gameList} setGameIdState={setSelectedGameId} selectedGameId={selectedGameId}/>
+      <div className={`mx-auto py-5 w-10/12 rounded-xl flex flex-col justify-around bg-gray-800/10 backdrop-blur-sm ${!(selectedGameId && selectedGameId.length > 0) ? 'hidden' : 'flex'}`}>
+          <div className={`flex-col justify-center space-y-8 max-w-xs self-center flex`}>
           <h2 className="self-center font-Protest text-4xl text-gray-300">Create Event</h2>
             <NewEventForm selectedGameId={selectedGameId} eventSubmitUrl={eventSubmitUrl}/>
           </div>

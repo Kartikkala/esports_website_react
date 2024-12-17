@@ -19,7 +19,6 @@ export default function EventsList({category, getEventsUrl, getUserUrl ,eventReg
             
             const events =  (await axios.get(getEventsUrl))
             setEventsArray(events.data[category])
-            console.log(category, events.data[category])
             setUser((await axios.get(getUserUrl)).data)
         }
 
@@ -31,8 +30,6 @@ export default function EventsList({category, getEventsUrl, getUserUrl ,eventReg
                     if(eventRegistrationUrl || eventDeletetionUrl)
                     {
                         const onRegister = async (e) => {
-                            e.preventDefault();
-                          
                             try {
                               if(registerStage >=2)
                               {
@@ -61,9 +58,10 @@ export default function EventsList({category, getEventsUrl, getUserUrl ,eventReg
                               console.error("Event registration failed", error.response?.data || error.message);
                               alert("Cannot register!");
                             } 
+                            (registerStage)
+                            return registerStage
                         };
                         const onDelete = async (e)=>{
-                            e.preventDefault();
                             try {
                               if(deleteStage>=2)
                               {
@@ -71,9 +69,6 @@ export default function EventsList({category, getEventsUrl, getUserUrl ,eventReg
                                   const response = await axios.post(eventDeletetionUrl, {
                                     eventId : event.eventId
                                   }, {withCredentials : true});
-
-                                  console.log(response)
-    
                                   if(!response.data.success)
                                   {
                                     alert("Event does not exist!")
@@ -95,8 +90,6 @@ export default function EventsList({category, getEventsUrl, getUserUrl ,eventReg
                               } 
                         }
                         return <EventCard mode={event.game.modeName}
-                        registerStage={registerStage}
-                        deleteStage={deleteStage}
                         setChange={setChange}
                         eventId={event.eventId} submitJoinIdUrl={submitJoinIdUrl} joinId={event.joinId} key={index} game={event.game.name}
                         imageBanner={event.game.imageBanner && event.game.imageBanner.data?`data:image/jpeg;base64,${Buffer.from(event.game.imageBanner.data).toString("base64")}`:
