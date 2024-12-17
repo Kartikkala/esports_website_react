@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { FaBell, FaCoins } from 'react-icons/fa';
 import { IoIosArrowBack } from "react-icons/io";
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import MenuCard from './MenuCard';
 import Avatar from '../Avatar';
 import axios from 'axios';
@@ -13,6 +13,7 @@ const Navbar = ({userCurrencyUrl, userInfoUrl}) => {
   const {totalMoney, setTotalMoney} = useContext(WalletContext)
   const {user, setUser} = useContext(UserContext)
   const location = useLocation();
+  const navigate = useNavigate()
 
   // Define route-specific settings
   const routeConfig = {
@@ -38,9 +39,20 @@ const Navbar = ({userCurrencyUrl, userInfoUrl}) => {
 
   useEffect(()=>{
     const getCurrencyAndUserInfo = async ()=>{
-      const response = await axios.get(userCurrencyUrl)
+      let response = undefined
+      try{
+        response = await axios.get(userCurrencyUrl)
+        setUser((await axios.get(userInfoUrl)).data)
+      }
+      catch{
+        if(!response || response.status !== 200)
+        {
+          navigate('/login')
+          alert('Please login again')
+        }
+      }
+      
       setTotalMoney(response.data.totalMoney)
-      setUser((await axios.get(userInfoUrl)).data)
     }
     getCurrencyAndUserInfo()
   }, [])

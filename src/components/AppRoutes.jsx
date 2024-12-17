@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
       },
       {
         path : "/registeredEvents",
-        element : <EventsList category={"registered"} getEventsUrl={`${API_BASE_URL}/events/events`}/>
+        element : <EventsList category={"registered"} getUserUrl={`${API_BASE_URL}/user`} getEventsUrl={`${API_BASE_URL}/events/events`}/>
       },
       {
         path : "/notifications",
@@ -45,11 +45,11 @@ export const router = createBrowserRouter([
       },
       {
         path : "/ongoingEvents",
-        element : <EventsList category={"ongoing"} getEventsUrl={`${API_BASE_URL}/events/events`}/>,
+        element : <EventsList category={"ongoing"} getEventsUrl={`${API_BASE_URL}/events/events`} getUserUrl={`${API_BASE_URL}/user`} eventDeletetionUrl={`${API_BASE_URL}/admin/deleteEvent`}/>,
       },
       {
         path : "/upcomingEvents",
-        element : <EventsList category={"upcoming"} getEventsUrl={`${API_BASE_URL}/events/events`} getUserUrl={`${API_BASE_URL}/user`} eventRegistrationUrl={`${API_BASE_URL}/events/registerForEvent`} eventDeletetionUrl={`${API_BASE_URL}/admin/deleteEvent`}/>,
+        element : <EventsList  category={"upcoming"} submitJoinIdUrl={`${API_BASE_URL}/admin/publishRoomId`} getEventsUrl={`${API_BASE_URL}/events/events`} getUserUrl={`${API_BASE_URL}/user`} eventRegistrationUrl={`${API_BASE_URL}/events/registerForEvent`} eventDeletetionUrl={`${API_BASE_URL}/admin/deleteEvent`}/>,
       },
       {
         path : "/admin",
