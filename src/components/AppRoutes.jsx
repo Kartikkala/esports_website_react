@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
   },
   {
     path : "/login",
-    element : <Login loginUrl={`${API_BASE_URL}/login`}/>,
+    element : <Login loginUrl={`${API_BASE_URL}/login`} registerUrl={`${API_BASE_URL}/register`} getOtpUrl={`${API_BASE_URL}/otp`}/>,
     errorElement : <div>Error 404</div>
   },
   {
