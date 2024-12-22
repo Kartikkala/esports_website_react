@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
       },
       {
         path : "/shop",
-        element : <Pricing getPacksUrl={`${API_BASE_URL}/shop/getPacks`} buyPackUrl={`${API_BASE_URL}/shop/buyPack`}/>
+        element : <Pricing getPacksUrl={`${API_BASE_URL}/shop/getPacks`} verifyOrderUrl={`${API_BASE_URL}/shop/buyPack`} makeOrderUrl={`${API_BASE_URL}/shop/createMoneyOrder`}/>
       },
       {
         path : "/registeredEvents",

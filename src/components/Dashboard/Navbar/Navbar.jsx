@@ -94,8 +94,11 @@ const Navbar = ({userCurrencyUrl, userInfoUrl}) => {
           <button className='mr-3 self-center'>
             <FaBell size={25} />
           </button>
-          <NavLink className='mr-3 self-center' to="/shop">
+          <NavLink className='mr-3 self-center flex gap-2 items-end' to="/shop">
             <FaCoins size={25} />
+            <div className='text-[14px]'>
+              {totalMoney}
+              </div>
           </NavLink>
           <button className="flex items-center md:mr-4 p-2" onClick={toggleMenu}>
             <Avatar />

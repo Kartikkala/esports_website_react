@@ -1,3 +1,4 @@
+"use client";
 import { PriceCardsWideDisplay } from './PriceCardsWideDisplay';
 import { PriceCarousel } from './PriceCarousel';
 import { useEffect, useState, useContext } from "react";
@@ -7,10 +8,24 @@ import {  MinusCircleIcon } from "@heroicons/react/24/solid";
 import axios from 'axios';
 
 
-export function PricingSection11({getPacksUrl, buyPackUrl}) {
+export function PricingSection11({getPacksUrl, makeOrderUrl, verifyOrderUrl}) {
   const [mobileDisplay, setMobileDisplay] = useState(false)
   const [coinPacks, setCoinPacks] = useState([])
   const {totalMoney, setTotalMoney} = useContext(WalletContext)
+
+  const loadScript = (src) =>{
+    return new Promise((resolve)=>{
+      const script = document.createElement('script')
+        script.src = src;
+        script.onload = ()=>{
+          resolve(true)
+        }
+        script.onerror = ()=>{
+          resolve(false)
+        }
+        document.body.appendChild(script)
+    })
+  }
 
   useEffect(()=>{
     const mobile = function () {
@@ -38,14 +53,37 @@ export function PricingSection11({getPacksUrl, buyPackUrl}) {
               e.preventDefault();
             
               try {
-                const response = await axios.post(buyPackUrl, {
+                const response = await axios.post(makeOrderUrl, {
                   packId : packs[i]._id
                 }, {withCredentials : true});
 
-                if(response.data.success)
-                {
-                  setTotalMoney((oldMoney)=>oldMoney+packs[i].coins)
-                }
+                const payment = new window.Razorpay({
+                  key : "something",
+                  order_id : response.data.id,
+                  ...response.data,
+                  handler : async function (response)
+                  {
+                    const razorpayResponse = {
+                      orderId : response.razorpay_order_id,
+                      paymentId : response.razorpay_payment_id,
+                      signature : response.razorpay_signature
+                    }
+                    const backendResponse = await axios.post(verifyOrderUrl, {...razorpayResponse, 
+                      packId : packs[i]._id
+                    })
+
+                    if(backendResponse.data.success)
+                    {
+                      alert('Payment Successful!')
+                    }
+                    else{
+                      alert('Payment unsuccessful!')
+                    }
+                  }
+
+                })
+
+                payment.open()
               
               } catch (error) {
                 console.error("Pack buy failed", error.response?.data || error.message);
@@ -72,6 +110,8 @@ export function PricingSection11({getPacksUrl, buyPackUrl}) {
     }
   
     fetcher()
+    loadScript("https://checkout.razorpay.com/v1/checkout.js")
+    
   }, [])
 
   const [currentIndex, setCurrentIndex] = useState(0);

@@ -7,7 +7,7 @@ import JoinIdDialog from './JoinIdDialog';
 import { useState } from 'react';
 
 // eslint-disable-next-line react/prop-types
-const EventCard = ({game, imageBanner, prizepool, mode, fee, date, totalPlayersRegistered, totalSlots, joinId, registerButtonTxt, registerButtonFn, deleteEventButtonFn, submitJoinIdUrl, eventId, admin, setChange}) => {
+const EventCard = ({game, imageBanner, prizepool, mode, fee, date, totalPlayersRegistered, totalSlots, joinId, registerButtonTxt, registerButtonFn, deleteEventButtonFn, submitJoinIdUrl, eventId, admin, setChange, category}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [deleteStage, setDeleteStage] = useState(1)
   const [registerStage, setRegisterStage] = useState(1)
@@ -50,8 +50,12 @@ const EventCard = ({game, imageBanner, prizepool, mode, fee, date, totalPlayersR
                   {deleteEventButtonFn && admin? 
                   <button onClick={()=>{deleteEventButtonFn();setDeleteStage((stage)=>stage = stage+1)}} className="px-[0.8em] py-[0.25em] border-[1px] rounded-full flex justify-center items-center gap-[0.5em] overflow-hidden group hover:translate-y-[0.125em] duration-200 backdrop-blur-[12px]">
                   {deleteStage===1 ? 
+                    category === 'ongoing' ? <IoIosCheckmarkCircle color='white'/> :
                   <MdDeleteOutline color='red'/>
-                  :<IoIosCheckmarkCircle color='red'/>}
+                  :category === 'ongoing' ? 
+                  <IoIosCheckmarkCircle color='green'/> :
+                  <IoIosCheckmarkCircle color='red'/>
+                }
                 </button>
                 : null }
               </div>

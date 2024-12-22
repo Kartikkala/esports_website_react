@@ -5,9 +5,9 @@ const Dashboard = () => {
 
   const renderCards = () => (
     <div className="gap-5 p-1 flex">
-      <Card heading={"Registered Events"} desc={"Contains all the events that you have registered for."} buttonText={"Show"} buttonUrl={"/registeredEvents"}/>
-      <Card heading={"Ongoing Events"} desc={"Contains all the events that you can register for right now!"} buttonText={"Show"} buttonUrl={"/ongoingEvents"}/>
       <Card heading={"Upcoming Events"} desc ={"Contains all the events that will be available for registration!"} buttonText={"Show"} buttonUrl={"/upcomingEvents"}/>
+      <Card heading={"Ongoing Events"} desc={"Contains all the events that you can register for right now!"} buttonText={"Show"} buttonUrl={"/ongoingEvents"}/>
+      <Card heading={"Registered Events"} desc={"Contains all the events that you have registered for."} buttonText={"Show"} buttonUrl={"/registeredEvents"}/>
     </div>
   );
 

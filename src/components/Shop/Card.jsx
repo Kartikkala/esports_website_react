@@ -6,7 +6,7 @@ import {Button,
 import { useEffect, useState } from "react";
 
 
-export default function PricingCard({ title, desc ,price, options, numberOfCards, symbol, buyFn }) {
+export default function PricingCard({ title, desc ,price, options, numberOfCards, buyFn }) {
   const [cardHeight, setCardHeight] = useState()
   const [cardHeaderheight, setCardHeaderHeight] = useState()
 
@@ -19,7 +19,7 @@ export default function PricingCard({ title, desc ,price, options, numberOfCards
 
   },[cardHeaderheight, cardHeight])
     return (
-      <div id="pricingcard" className={`flex flex-col w-[${100/numberOfCards}%] md:w-2/3 bg-clip-border rounded-xl text-gray-700 shadow-md bg-cover bg-[url(/home/sirkartik/vscode/esports_website_react/frontend/src/assets/images/layered-waves-haikei.svg)]`}>
+      <div id="pricingcard" className={`flex flex-col w-[${100/numberOfCards}%] bg-clip-border rounded-xl text-gray-700 shadow-md bg-cover bg-[url(/home/sirkartik/vscode/esports_website_react/frontend/src/assets/images/layered-waves-haikei.svg)]`}>
         <div className={`backdrop-blur-sm w-full rounded-xl h-full`}>
           {/*---------------------------------------- Header Div --------------------------------------------- */}
           <div className="p-6 w-full" id="pricingcardheader"> 
@@ -41,7 +41,7 @@ export default function PricingCard({ title, desc ,price, options, numberOfCards
               color="white"
               className="!mt-4 flex gap-1 !text-4xl"
             >
-              {symbol}
+              {"₹"}
               {price}
               <Typography
                 as="span"
