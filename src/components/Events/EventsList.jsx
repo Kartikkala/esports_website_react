@@ -10,7 +10,6 @@ export default function EventsList({category, getEventsUrl, getUserUrl ,eventReg
 {
     const {setTotalMoney} = useContext(WalletContext)
     const [deleteStage, setDeleteStage] = useState(1)
-    const[registerStage, setRegisterStage] = useState(1)
     const {user, setUser} = useContext(UserContext)
     const [change, setChange] = useState(0)
     const [eventsArray, setEventsArray] = useState([])
@@ -29,14 +28,14 @@ export default function EventsList({category, getEventsUrl, getUserUrl ,eventReg
                 {Array.isArray(eventsArray) && eventsArray.length > 0 ? eventsArray.map((event, index)=>{
                     if(eventRegistrationUrl || eventDeletetionUrl)
                     {
-                        const onRegister = async (e) => {
+                        const onRegister = async (playerInGameId) => {
                             try {
-                              if(registerStage >=2)
-                              {
-                                setRegisterStage(1)
                                 const response = await axios.post(eventRegistrationUrl, {
-                                  eventId : event.eventId
+                                  eventId : event.eventId,
+                                  inGameId : playerInGameId
                                 }, {withCredentials : true});
+
+                                console.log(response.data)
   
                                 if(!response.data.success)
                                 {
@@ -46,20 +45,13 @@ export default function EventsList({category, getEventsUrl, getUserUrl ,eventReg
                                 {
                                   alert("Registration successful!")
                                   setChange((change)=>change+1)
-                                  setTotalMoney((oldMoney)=>oldMoney-event.fee)
+                                  setTotalMoney(response.data.newMoney)
                                 }
-                              }
-                              else
-                              {
-                                setRegisterStage((stage)=>stage=stage+1)
-                              }
                             
                             } catch (error) {
                               console.error("Event registration failed", error.response?.data || error.message);
                               alert("Cannot register!");
                             } 
-                            (registerStage)
-                            return registerStage
                         };
                         const onDelete = async (e)=>{
                             try {
@@ -104,7 +96,6 @@ export default function EventsList({category, getEventsUrl, getUserUrl ,eventReg
                     else{
                       return <EventCard mode={event.game.modeName}
                       category={category}
-                        registerStage={registerStage}
                         deleteStage={deleteStage}
                         setChange={setChange}
                         eventId={event.eventId} submitJoinIdUrl={submitJoinIdUrl} joinId={event.joinId} key={index} game={event.game.name}
