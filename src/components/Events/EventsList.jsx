@@ -6,7 +6,7 @@ import {WalletContext} from "../../contexts/CurrencyContext"
 import { UserContext } from '../../contexts/UserContext';
 import { Buffer } from "buffer";
 
-export default function EventsList({category, getEventsUrl, getUserUrl ,eventRegistrationUrl, eventDeletetionUrl,submitJoinIdUrl})
+export default function EventsList({category, getEventsUrl, getUserUrl ,eventRegistrationUrl, eventDeletetionUrl,submitJoinIdUrl, winnerDeclareUrl})
 {
     const {setTotalMoney} = useContext(WalletContext)
     const [deleteStage, setDeleteStage] = useState(1)
@@ -82,6 +82,7 @@ export default function EventsList({category, getEventsUrl, getUserUrl ,eventReg
                               } 
                         }
                         return <EventCard mode={event.game.modeName}
+                        winnerDeclareUrl={winnerDeclareUrl}
                         category={category}
                         setChange={setChange}
                         eventId={event.eventId} submitJoinIdUrl={submitJoinIdUrl} joinId={event.joinId} key={index} game={event.game.name}
@@ -96,6 +97,7 @@ export default function EventsList({category, getEventsUrl, getUserUrl ,eventReg
                     else{
                       return <EventCard mode={event.game.modeName}
                       category={category}
+                      winnerDeclareUrl={winnerDeclareUrl}
                         deleteStage={deleteStage}
                         setChange={setChange}
                         eventId={event.eventId} submitJoinIdUrl={submitJoinIdUrl} joinId={event.joinId} key={index} game={event.game.name}

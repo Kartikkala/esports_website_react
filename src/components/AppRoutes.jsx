@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
       },
       {
         path : "/ongoingEvents",
-        element : <EventsList category={"ongoing"} getEventsUrl={`${API_BASE_URL}/events/events`} getUserUrl={`${API_BASE_URL}/user`} eventDeletetionUrl={`${API_BASE_URL}/admin/deleteEvent`}/>,
+        element : <EventsList category={"ongoing"} winnerDeclareUrl={`${API_BASE_URL}/admin/declareWinner`} getEventsUrl={`${API_BASE_URL}/events/events`} getUserUrl={`${API_BASE_URL}/user`} eventDeletetionUrl={`${API_BASE_URL}/admin/deleteEvent`}/>,
       },
       {
         path : "/upcomingEvents",
