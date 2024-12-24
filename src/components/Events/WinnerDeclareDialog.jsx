@@ -52,7 +52,10 @@ export default function WinnerDeclareDialog({isOpen, toggleMenu, eventId, getWin
                 <div className='size-1'></div>
               </div>
               <div className='bg-gray-950 rounded-2xl relative md:bg-gray-100/0 flex flex-col gap-4'>
-              <RegularInfoTyping label={"UPI:"} value={`${upiId}`}/>
+              <div className="w-full flex">
+                        <div className={`text-white absolute z-[-1] flex place-items-center justify-around left-6 top-3 gap-3 ${upiId ? "opacity-0": "opacity-100"}`}> {upiId}</div>
+                        <input value={upiId ? upiId : ""} disabled={true} className={`mx-auto w-full relative text-gray-300 h-12 ${!upiId?'bg-red-900/20':'bg-green-900/20'} outline-none shadow-lg sm:text-sm rounded-xl duration-200 pl-3`}/>
+                        </div>
               <label className="text-sm">
                 Player ID:
               </label>

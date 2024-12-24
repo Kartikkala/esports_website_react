@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
   },
   {
     path : "/",
-    element : <Layout userCurrencyUrl={`${API_BASE_URL}/shop/getCurrency`} userInfoUrl={`${API_BASE_URL}/user`}/>,
+    element : <Layout userCurrencyUrl={`${API_BASE_URL}/shop/getCurrency`} userInfoUrl={`${API_BASE_URL}/user`} upiIdUrl={`${API_BASE_URL}/shop/upi`}/>,
     children : [
       {
         index : true,

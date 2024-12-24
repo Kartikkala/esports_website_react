@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Slider from 'react-slick'
 
 
-export default function EventCarousel()
+export default function EventCarousel({getEventsUrl})
 {
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
@@ -17,6 +17,7 @@ export default function EventCarousel()
     useEffect(()=>{
         function handleWindowChange()
         {
+            console.log("Window w-",window.innerWidth)
             setWindowSize({
                 width : window.innerWidth,
                 height : window.innerHeight
@@ -32,19 +33,19 @@ export default function EventCarousel()
             {
                 showOnDesktop ?
                 <div>
-                <img src="https://placehold.co/1080x300" alt=""/>
+                <img src="https://placehold.co/1080x300" alt="" width={windowSize.width} className="block"/>
                 </div> :
                 <div>
-                <img src="https://placehold.co/1920x300" alt="" />
+                <img src="https://placehold.co/1920x300" alt="" width={windowSize.width}/>
                 </div>
             }
             {
                 showOnDesktop ?
                 <div>
-                <img src="https://placehold.co/1080x300" alt=""/>
+                <img src="https://placehold.co/1080x300" alt="" width={windowSize.width}/>
                 </div> :
                 <div>
-                <img src="https://placehold.co/1920x300" alt="" />
+                <img src="https://placehold.co/1920x300" alt="" width={windowSize.width}/>
                 </div>
             }
         </Slider>

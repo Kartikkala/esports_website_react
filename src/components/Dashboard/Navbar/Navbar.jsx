@@ -8,7 +8,7 @@ import axios from 'axios';
 import { UserContext } from '../../../contexts/UserContext';
 import { WalletContext } from '../../../contexts/CurrencyContext';
 
-const Navbar = ({userCurrencyUrl, userInfoUrl}) => {
+const Navbar = ({userCurrencyUrl, userInfoUrl, toggleUpiForm}) => {
   const [isOpen, setIsOpen] = useState(false);
   const {totalMoney, setTotalMoney} = useContext(WalletContext)
   const {user, setUser} = useContext(UserContext)
@@ -107,7 +107,7 @@ const Navbar = ({userCurrencyUrl, userInfoUrl}) => {
       </nav>
 
       {/* Overlay of Menu Card */}
-      <MenuCard isOpen={isOpen} toggleMenu={toggleMenu} user={user}/>
+      <MenuCard isOpen={isOpen} toggleMenu={toggleMenu} user={user} toggleUpiMenu={toggleUpiForm}/>
     </>
   );
 };

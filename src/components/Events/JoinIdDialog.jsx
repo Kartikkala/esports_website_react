@@ -42,7 +42,7 @@ export default function JoinIdDialog({isOpen, toggleMenu, submitJoinIdUrl, event
     return (
         <div className={`z-[99] md:p-0 md:w-fit md:h-fit md:right-4 md:top-16 md:bg-opacity-0 md:bg-none bg-opacity-60 absolute flex-col ${isOpen ? 'flex' : 'hidden'} bg-black shadow-lg text-white top-0 h-full w-full items-center left-0`}>
             <div className={`flex-col ${isOpen ? 'flex' : 'hidden'} gap-5 border-2 border-gray-800 bg-gradient-to-bl from-gray-800/50 via-gray-900/50 to-black/50 backdrop-blur-xl shadow-lg text-white p-4 rounded-2xl h-auto w-full self-center my-auto`}>
-              <div className='md:hidden flex justify-between'>
+              <div className='flex justify-between'>
                 <button onClick={()=>{toggleMenu((menu)=>menu=!menu)}} className='self-center'><IoClose size={25}/></button>
                 <h4 className='self-center text-sm'>Edit Room Code</h4>
                 <div className='size-1'></div>
