@@ -2,7 +2,6 @@
 import { IoClose } from "react-icons/io5";
 import { useState } from "react";
 import axios from 'axios'
-import RegularInfoTyping from "./RegularInfoTyping";
 
 export default function WinnerDeclareDialog({isOpen, toggleMenu, eventId, getWinnerUrl})
 {

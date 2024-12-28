@@ -92,7 +92,9 @@ const Navbar = ({userCurrencyUrl, userInfoUrl, toggleUpiForm}) => {
         {/* Desktop and Tablet Navlinks */}
         <div className={`md:flex md:flex-row hidden mt-4 md:mt-0 md:items-center md:gap-4`}>
           <button className='mr-3 self-center'>
+          <NavLink className='mr-3 self-center flex gap-2 items-end' to="/notifications">
             <FaBell size={25} />
+            </NavLink>
           </button>
           <NavLink className='mr-3 self-center flex gap-2 items-end' to="/shop">
             <FaCoins size={25} />

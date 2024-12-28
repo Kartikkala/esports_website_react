@@ -71,7 +71,7 @@ export default function UpiIdForm({  upiIdUrl, isOpen, toggleMenu })
                         <div className={`text-white absolute z-[-1] flex place-items-center justify-around left-6 top-3 gap-3 ${presetUpiId ? "opacity-0": "opacity-100"}`}> {presetUpiId}</div>
                         <input value={presetUpiId ? presetUpiId : ""} disabled={true} className={`mx-auto w-full relative text-gray-300 h-12 ${!presetUpiId?'bg-red-900/20':'bg-green-900/20'} outline-none shadow-lg sm:text-sm rounded-xl duration-200 pl-3`}/>
                         </div>
-
+    
                         <div className="relative w-full flex">
                         <input disabled={isSubmitting} onChange={(e) => changeUpi(e.target.value)} type="email" className="mx-auto w-full relative text-gray-300 hover:bg-gray-900/70 hover:p-3 h-12 focus:z-[20] focus:outline-none focus:bg-gray-900/70 focus:p-3 outline-none shadow-lg sm:text-sm rounded-xl bg-gray-800/40 duration-200 pl-3"/>
                         <div className={`text-white absolute z-[-1] flex place-items-center justify-around left-6 top-3 gap-3 ${upi ? "opacity-0": "opacity-100"}`}>UPI ID</div>

@@ -41,7 +41,7 @@ export const router = createBrowserRouter([
       },
       {
         path : "/notifications",
-        element : <Notifications/>
+        element : <Notifications getNotificationsUrl={`${API_BASE_URL}/notifications/getAll`} createNotificationUrl={`${API_BASE_URL}/notifications/createNotification`} deleteNotificationUrl={`${API_BASE_URL}/notifications/deleteNotification`}/>
       },
       {
         path : "/ongoingEvents",
